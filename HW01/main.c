@@ -48,7 +48,7 @@ int main(int argc, char * * argv)
       // stderr means standard error, usually it is the computer
       // screen but it is possible to save the messages to a file
       // by using ">&" (without the quotation marks)
-      
+
       return EXIT_FAILURE;
       // Since the program cannot do what it needs to do (add,
       // subtract, multiply, or divide), it returns EXIT_FAILURE.
