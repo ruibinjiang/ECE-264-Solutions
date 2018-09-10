@@ -111,21 +111,20 @@ void kmean (int kval, int nval, DataPoint * *datapoints, Centroid * *centroids)
 {
 		// reset all centroids
 	for (int i = 0; i < kval; i++){
-		for (int j = 0; j < centroids->dimension; j++){
-			centroids[i][j] = 0;
-		}
+		Centroid_reset(centroids[i]);
 	}
 		// initialize each data point to a cluster between 0 and kval - 1
-	int temp_val = 0;
+	int cent;
 	for (int a = 0; a < nval; a++){
-		datapoints -> cluster[a] = temp_val;
-		if (temp_val == kval){
-			temp_val = 0;
-		}
-	}
+		cent = rand() % kval;
+		datapoints[a] -> cluster = cent;
+		Centroid_addPoint(centroids[a], datapoint[cent]);
 		
+	}
 		// find the centroid for initial random assignment of datapoints
-	
+	for (int j = 0; j < kval; j++){
+		Centroid_findCenter(centroids[j]);
+	}
 		// Now start the loop till convergence is met - (Please see README for understanding kmean algorithm convergence condition)
 		//
 		// 1. for each data point, find the index of the centroid that is the closest
@@ -133,9 +132,38 @@ void kmean (int kval, int nval, DataPoint * *datapoints, Centroid * *centroids)
 		// 3. reset all the centroids
 		// 4. go through each datapoint again and add this datapoint to its centroid using Centroid_addPoint function
 		// 5. find the new centroid for each cluster by calling Centroid_findCenter
-	int unfinished = 1
+	int unfinished = 1;
+	int mindex;
+	int c;
 	while(unfinished){
 		unfinished = 0;
+		
+		//checks if datapoint is assigned the closest centroid, if not update the centroid index and 
+		for (c = 0; c < nval; c++){
+			mindex = closestCentroid (kval,datapoint[c],centroids);
+			if (datapoint[c]->cluster != mindex){
+				unfinished = 1;
+				datapoint[c]->cluster = mindex;
+			}
+		}
+		
+		for (c = 0; c < kval; c++){
+			Centroid_reset(centroids[c]);
+		}
+		
+		for (c = 0; c < nval; c++){
+			Centroid_addPoint(centroids[c], datapoint[centroids[c]->cluster]);
+		}
+		
+		for (c = 0; c < kval; c++){
+			Centroid_findCenter(centroids[c]);
+		}
+		
+		
+	}
+		
+			
+	
 		
 	}
 }
