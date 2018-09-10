@@ -118,7 +118,7 @@ void kmean (int kval, int nval, DataPoint * *datapoints, Centroid * *centroids)
 	for (int a = 0; a < nval; a++){
 		cent = rand() % kval;
 		datapoints[a] -> cluster = cent;
-		Centroid_addPoint(centroids[a], datapoint[cent]);
+		Centroid_addPoint(centriods[cent], datapoints[a]);
 		
 	}
 		// find the centroid for initial random assignment of datapoints
@@ -152,7 +152,7 @@ void kmean (int kval, int nval, DataPoint * *datapoints, Centroid * *centroids)
 		}
 		
 		for (c = 0; c < nval; c++){
-			Centroid_addPoint(centroids[c], datapoint[centroids[c]->cluster]);
+			Centroid_addPoint(centroids[centroids[c]->cluster], datapoint[c]);
 		}
 		
 		for (c = 0; c < kval; c++){
