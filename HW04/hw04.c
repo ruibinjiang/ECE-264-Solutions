@@ -138,7 +138,7 @@ void kmean (int kval, int nval, DataPoint * *datapoints, Centroid * *centroids)
   while(unfinished){
     unfinished = 0;
     
-    //checks if datapoint is assigned the closest centroid, if not update the centroid index and 
+    //checks if datapoint is assigned the closest centroid, if not update the centroid index and
     for (c = 0; c < nval; c++){
       mindex = closestCentroid (kval,datapoints[c],centroids);
       if (datapoints[c]->cluster != mindex){
