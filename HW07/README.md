@@ -8,7 +8,7 @@
 Merge Sort is a Divide and Conquer algorithm. You can read more about it [here](https://medium.com/basecs/making-sense-of-merge-sort-part-1-49649a143478).
 
 The function divides the input array in two portions, and calls itself (recursion) for the two parts. Once the exit condition is met, the function then merges the two sorted arrays.
-The `merge()` function is used for merging two halves. 
+The `merge()` function is used for merging two halves.
 The `merge(arr, l, m, r)` is key process that assumes that `arr[l..m]` and `arr[m+1..r]` are sorted and merges the two sorted sub-arrays into one.
 * `arr` is the input array to the function.
 * `l` is the starting index of the array.
@@ -33,22 +33,22 @@ Details
 		* where, `hw07` is the object file.
 		* `Input/Test1` is the input file.
 		* `Output1` is the output file.
-			
+
  <strong> Need to complete the following functions: </strong><br>
  * `int main(int argc, char * * argv)`
 	* allocate memory to store the numbers (initialize an array of integers). Check for malloc fail, if so, `return EXIT_FAILURE;`
 	* use `mergesort()` function, after defining the `merge()` function.
 		* ENSURE THE MERGESORT FUNCTION IS USED TO SORT THE ARRAY AND MERGE IS USED TO ARRANGE IN ORDER.
-	   
+
  * `void merge(int arr[], int l, int m, int r) `
 	* run a loop to compare between left and right sub array to get array in ascending order
 	* position the elements remaining in the left sub array and right sub array in order
-	
+
  * `void mergeSort(int arr[], int l, int r) `
  	* partition array into left and right side
 	* perform recursion on each side
 	* merge the two sides to get the total sorted array
-	
+
 Summary
 ========
 The goal of this homework is: To read from a file into an array of integers. Then to sort, using `mergesort()`, this array of structures and to finally merge it using `merge()`. To write the sorted array to the output file, using `fprintf()`.
@@ -56,8 +56,8 @@ The goal of this homework is: To read from a file into an array of integers. The
 The input and output files are specified through the terminal during runtime.
 
 Please build your own Makefile to test the code.
-	
-	
+
+
 WHAT TO SUBMIT
 ==============
 

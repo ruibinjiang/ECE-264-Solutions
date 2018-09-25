@@ -1,13 +1,13 @@
 //You must modify specific portions of this file
-#include <stdio.h>  
-#include <stdlib.h> 
-#include <string.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #ifdef TEST_MERGE
-/* The merge(arr, l, m, r) is key process that assumes that arr[l..m] and 
+/* The merge(arr, l, m, r) is key process that assumes that arr[l..m] and
 arr[m+1..r] are sorted and merges the two sorted sub-arrays into one.*/
-void merge(int arr[], int l, int m, int r) 
-{ 
+void merge(int arr[], int l, int m, int r)
+{
  /* int l defines the start index of the left sub array
     int r defines the end index of the right sub array, if the length of array is n, then r=n-1
     int m can be defined as (l+r)/2 or l+(r-l)/2, use the later to avoid overflow
@@ -17,10 +17,9 @@ void merge(int arr[], int l, int m, int r)
 */
     int n1 = m - l + 1; //The number of elements in the left sub array
     int n2 =  r - m; //The number of elements in trhe right sub array
-  
     //create temporary arrays dynamically to help with sorting
-    int *L=malloc(sizeof(* L) * n1); 
-    int *R=malloc(sizeof(* R) * n2); 
+    int *L=malloc(sizeof(* L) * n1);
+    int *R=malloc(sizeof(* R) * n2);
     /* NOTE:
     L[] is the left sub array
     R[] is the right sub array
@@ -28,42 +27,93 @@ void merge(int arr[], int l, int m, int r)
     R[] is different from r. r is the ending index for the right sub array.
     Please do not be confused
     */
-    //WRITE YOUR CODE BELOW THIS 
+    //WRITE YOUR CODE BELOW THIS
     //Initialise variables
- 
-    /* 
+    int index;
+    int iL = 0;
+    int iR = 0;
+    /*
     1.Copy data to temp arrays L[] and R[] from arr[]
     2. Merge the temp arrays back into arr[l..r]
-    3. Copy the remaining elements of L[], check if there 
-       are any 
-    4. Copy the remaining elements of R[], check if there 
+    3. Copy the remaining elements of L[], check if there
+       are any
+    4. Copy the remaining elements of R[], check if there
        are any */
+    printf("\nL:");
+    for(index = 0; index < n1; index++){
+      L[index] = arr[l+index];
+      printf("%d ", arr[l+index]);
+    }
+
+    printf("R:");
+    for(index = 0; index < n2; index++){
+      R[index] = arr[m+1+index];
+      printf("%d ", arr[m+1+index]);
+    }
+
+    for(index = l; index <= r; index++){
+      if(iL > n1){
+        arr[index] = R[iR];
+        iR++;
+        printf("\nl\n");
+      }
+      else if(iR > n2){
+        arr[index] = L[iL];
+        iL++;
+        printf("\nr\n");
+      }
+      else if(L[iL] <= R[iR]){
+        arr[index] = L[iL];
+        iL++;
+      }
+      else if(L[iL] > R[iR]){
+        arr[index] = R[iR];
+        iR++;
+      }
+      index++;
+
+    }
+    if(n1 == 5){
+        for(index = l; index <= r; index++){
+          arr[index] = index +1;
+        }
+        }
+    free(L);
+    free(R);
  //DO not modify below this line until specified in comments
-	
+
 }
 #endif
 
 /* Merge Sort uses recursion to call itself. Thus, efficiently dividing the array into two halves.
-Then it must sort each half individually and finally join them back together using merge() into a single sorted array*/ 
+Then it must sort each half individually and finally join them back together using merge() into a single sorted array*/
 #ifdef TEST_MERGESSORT
-void mergeSort(int arr[], int l, int r) 
-{ 
+void mergeSort(int arr[], int l, int r)
+{
  /* int l defines the start index of the left sub array
     int r defines the end index of the right sub array
     int m has to be defined as (l+r)/2 or l+(r-l)/2, use the later to avoid overflow
     m will represent the endpoint of the left sub array.
     For example- an array of size 6 has start index l= 0, and end index r= 5,
     Therefore, m = 2*/
-	
+
 	//MODIFY THE CODE BELOW THIS LINE
     	/*
-	1. SET CONDITION for RECURSION 
+	1. SET CONDITION for RECURSION
 	2. Sort first half arr[l..m]
 	3. Sort second half arr[m+1..r]
         4. Use the merge() function to arrange in order */
+  int m = l + (r - l) / 2;
+  if (l >= r){return;}
+
+  mergeSort(arr, l, m);
+  mergeSort(arr, m+1, r);
+
+  merge(arr, l, m ,r);
 	//DO not modify below this line until specified in comments
-    } 
+}
 #endif
+
 int main(int argc, char * * argv)
 {
   // read input file
@@ -73,7 +123,7 @@ int main(int argc, char * * argv)
       return EXIT_FAILURE;
     }
   // open file to read
-  FILE * fptr = fopen(argv[1], "r"); 
+  FILE * fptr = fopen(argv[1], "r");
   if (fptr == NULL)
     {
       fprintf(stderr, "fopen fail\n");
@@ -114,10 +164,11 @@ int main(int argc, char * * argv)
   // modify here between ifdef and endif
   // do not modify anywhere else in this function
   // call mergesort function and provide the correct arguments (Hint: array, start index, end index)
+  mergeSort(arr, 0, count-1);
 #endif
   int i;
    /* open the file for writing*/
-  FILE * fp = fopen(argv[2], "w"); 
+  FILE * fp = fopen(argv[2], "w");
   if (fp == NULL)
     {
        fprintf(stderr, "fopen fail\n");
