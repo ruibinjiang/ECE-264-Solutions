@@ -39,45 +39,38 @@ void merge(int arr[], int l, int m, int r)
        are any
     4. Copy the remaining elements of R[], check if there
        are any */
-    printf("\nL:");
     for(index = 0; index < n1; index++){
       L[index] = arr[l+index];
-      printf("%d ", arr[l+index]);
     }
 
-    printf("R:");
     for(index = 0; index < n2; index++){
       R[index] = arr[m+1+index];
-      printf("%d ", arr[m+1+index]);
     }
 
-    for(index = l; index <= r; index++){
-      if(iL > n1){
-        arr[index] = R[iR];
-        iR++;
-        printf("\nl\n");
-      }
-      else if(iR > n2){
+    index=l;
+    while(iL < n1 && iR < n2){
+      if(L[iL] <= R[iR]){
         arr[index] = L[iL];
-        iL++;
-        printf("\nr\n");
+        ++iL;
       }
-      else if(L[iL] <= R[iR]){
-        arr[index] = L[iL];
-        iL++;
-      }
-      else if(L[iL] > R[iR]){
+      else{
         arr[index] = R[iR];
-        iR++;
+        ++iR;
       }
+      ++index;
+    }
+
+    while (iL < n1) {
+      arr[index] = L[iL];
+      iL++;
       index++;
-
     }
-    if(n1 == 5){
-        for(index = l; index <= r; index++){
-          arr[index] = index +1;
-        }
-        }
+
+    while (iR < n2) {
+      arr[index] = R[iR];
+      iR++;
+      index++;
+    }
     free(L);
     free(R);
  //DO not modify below this line until specified in comments

@@ -7,7 +7,7 @@ ERROR = -Wvla -Werror
 GCC = gcc -std=c99 -g $(WARNING) $(ERROR)
 VAL = valgrind --tool=memcheck --log-file=memcheck.txt --leak-check=full --verbose
 
-TESTFALGS = -DTEST_MERGE -DTEST_MERGESSORT -DTEST_MERGESORT 
+TESTFALGS = -DTEST_MERGE -DTEST_MERGESSORT -DTEST_MERGESORT
 
 SRCS = main.c
 OBJS = $(SRCS:%.c=%.o)
@@ -16,7 +16,9 @@ hw07: $(OBJS)
 	$(GCC) $(TESTFALGS) $(OBJS) -o hw07
 
 testmemory: $(TARGET)
-	$(VAL) --log-file=memcheck1.txt ./hw06 inputs/test1.bin output1.bin
+	$(VAL) --log-file=memcheck1.txt ./hw07 Input/Test1 Output1
+	$(VAL) --log-file=memcheck2.txt ./hw07 Input/Test2 Output2
+	$(VAL) --log-file=memcheck3.txt ./hw07 Input/Test3 Output3
 # Test memory leaks for all inputs and outputs
 
 .c.o:
