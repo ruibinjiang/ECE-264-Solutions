@@ -115,8 +115,9 @@ BMPImage *BMP_Open(const char *filename) {
 	//(bmpImage->data = (unsigned char *)malloc(sizeof(unsigned char)*((int)((bmpImage->header).imagesize))))
 	//check error
 	bmpImage->data = (unsigned char *)malloc(sizeof(unsigned char)*((int)((bmpImage->header).imagesize)));
+	if (bmpImage->data == NULL){return NULL;}
 	// read in the image data
-	int read_data = fread(bmpImage -> data,sizeof (char) , (int)((bmpImage->header).imagesize)) ,fptr);
+	int read_data = fread(bmpImage -> data,sizeof (unsigned char) , (int)((bmpImage->header).imagesize)) ,fptr);
 	//check for error while reading
 	if(read_data != (int)((bmpImage->header).imagesize))){return NULL;}
 	fclose(fptr);
