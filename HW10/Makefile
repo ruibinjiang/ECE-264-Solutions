@@ -27,8 +27,8 @@ testmemory: $(TARGET)
 testall: test1 test2 test3
 
 test1: hw10
-	./hw10 inputs/test1.bin output1.bin
-	diff output1.bin expected/expected1.bin
+	./hw10 exampleImages/CondProb.bmp CondProb.bmp
+	diff CondProb.bmp expectedImages/expectedCondProb.bmp
 
 test2: hw10
 	./hw10 inputs/test2.bin output2.bin

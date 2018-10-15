@@ -52,7 +52,7 @@ int Is_BMPHeader_Valid(BMPHeader* header, FILE *fptr) {
 		{
 			return 0;
 		}
-		if (( hheaderdr -> planes ) != 1 )
+		if (( header -> planes ) != 1 )
 		{
 			return 0;
 		}
@@ -108,18 +108,18 @@ BMPImage *BMP_Open(const char *filename) {
 
 	//Read the first 54 bytes of the source into the header
 	int read_size = fread(&(bmpImage->header), sizeof(BMPHeader), 1, fptr);
-
+	if (read_size != sizeof(BMPHeader)){return NULL;}
 	//check if the header is valid
-	if (Is_BMPHeader_Valid(bmpImage -> header, fptr) == 0){return NULL;}
+	if (Is_BMPHeader_Valid(&(bmpImage->header), fptr) == 0){return NULL;}
 	// Allocate memory for image data
 	//(bmpImage->data = (unsigned char *)malloc(sizeof(unsigned char)*((int)((bmpImage->header).imagesize))))
 	//check error
 	bmpImage->data = (unsigned char *)malloc(sizeof(unsigned char)*((int)((bmpImage->header).imagesize)));
 	if (bmpImage->data == NULL){return NULL;}
 	// read in the image data
-	int read_data = fread(bmpImage -> data,sizeof (unsigned char) , (int)((bmpImage->header).imagesize)) ,fptr);
+	int read_data = fread(bmpImage -> data,sizeof (unsigned char) , (int)((bmpImage->header).imagesize),fptr);
 	//check for error while reading
-	if(read_data != (int)((bmpImage->header).imagesize))){return NULL;}
+	if(read_data != (int)((bmpImage->header).imagesize)){return NULL;}
 	fclose(fptr);
 	return bmpImage;
 }
@@ -136,7 +136,7 @@ int BMP_Write(const char * outfile, BMPImage* image)
 	//open file and check for error
 	if(fptr == NULL){return 0;}
 	//check error for writing
-	if (fwrite (& (image -> header ) , sizeof(BMP_Header) , 1,fptr) != 1){
+	if (fwrite (& (image -> header ) , sizeof(BMPHeader) , 1,fptr) != 1){
 		fclose(fptr);
 		return 0;
 	}

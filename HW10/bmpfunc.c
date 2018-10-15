@@ -22,19 +22,19 @@ BMPImage * ImgToGray(BMPImage * image){
 	// allocate space for the image
 	// the image has the same size
 	// therefore the header has to stay the same
-	// check for memory allocation failure 
+	// check for memory allocation failure
 	BMPImage *gray_image = (BMPImage *)malloc(sizeof(BMPImage));
 	if (gray_image == NULL){return NULL;}
 	//gray_image can be the name of the new image memory allotment
 	gray_image->header = image->header;
-	
+
 	//Assign the the imagesize as height * width
-	(gray_image->header).imagesize = (gray_image->header).width*(gray_image->header).height;
-	
+	(gray_image->header).imagesize = width*height;
+
 	//check for data allocation failure using :
-	gray_image->data = malloc(sizeof(unsigned char)*(gray_image->header).imagesize));
+	gray_image->data = malloc(sizeof(unsigned char)*(gray_image->header).imagesize);
 	if(gray_image->data == NULL){return NULL;}
-	
+
 	int pixel=0;
 	int gray_val = 0;
 	//Run loop for all pixels using height and width
@@ -53,8 +53,7 @@ BMPImage * ImgToGray(BMPImage * image){
 		pixel+=3;
 	}
 	//return the result
-
+	return gray_image;
 }
 
 #endif
-
