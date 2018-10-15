@@ -16,13 +16,13 @@ This assignment requires you to do the following :
 2. Convert the colored image to grayscale
 3. Save the new image in BMP format
 
-Note: Do not use floating point variables for this assignment. Only use integers for all calculations. Floating point numbers cannot represent a value precisely. This can lead to rounding off errors. For example if x is a very large number and y is significantly smaller then, 
+Note: Do not use floating point variables for this assignment. Only use integers for all calculations. Floating point numbers cannot represent a value precisely. This can lead to rounding off errors. For example if x is a very large number and y is significantly smaller then,
 
 x + y - x and x - x + y can lead to two different outputs.
 
 x + y is taken to be x as y is significantly smaller than x and thus x + y - x = 0
 
-for x - x + y, the output is y. This leads to faulty calculations and erroneous outputs. While testing, remember to use only bmp image files. 
+for x - x + y, the output is y. This leads to faulty calculations and erroneous outputs. While testing, remember to use only bmp image files.
 
 Since you will be dealing with BMP image file format, more details can be found at: https://en.wikipedia.org/wiki/BMP_file_format
 
@@ -31,7 +31,7 @@ Let suppose we have an image :
 
 ![Image](jpgfiles/rgb.jpg)
 
-This colored image has three channels: Red, Green and Blue. A grayscale or greyscale image is one in which the value of each pixel is a single sample representing only an amount of light, that is, it carries only intensity information. Images of this sort, also known as black-and-white or gray monochrome, are composed exclusively of shades of gray. The contrast ranges from black at the weakest intensity to white at the strongest. 
+This colored image has three channels: Red, Green and Blue. A grayscale or greyscale image is one in which the value of each pixel is a single sample representing only an amount of light, that is, it carries only intensity information. Images of this sort, also known as black-and-white or gray monochrome, are composed exclusively of shades of gray. The contrast ranges from black at the weakest intensity to white at the strongest.
 
 One method for doing this is to get the average of the three channels, so what you do is (red + green + blue)/3 and you get your desired grayscale image. This method is somewhat flawed as the image often turns out to be rather black.
 
@@ -105,5 +105,4 @@ zip HW10.zip hw10.c bmpfunc.c bmpimage.c
 <strong>You will not get any credits if the submitted file is not zipped</strong>
 
 # Remember to define test flags:
--DTEST_MAINFUNC -DTEST_FUNCGIVEN -DTEST_IMGTOGRAY -DTEST_HEADERVALID -DTEST_BMPOPENFILE -DTEST_BMPWRITEFUNC -DTEST_BMPFREEFUNC 
-
+-DTEST_MAINFUNC -DTEST_FUNCGIVEN -DTEST_IMGTOGRAY -DTEST_HEADERVALID -DTEST_BMPOPENFILE -DTEST_BMPWRITEFUNC -DTEST_BMPFREEFUNC
