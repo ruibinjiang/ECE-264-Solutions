@@ -27,16 +27,20 @@ testmemory: $(TARGET)
 testall: test1 test2 test3
 
 test1: hw10
-	./hw10 exampleImages/CondProb.bmp CondProb.bmp
-	diff CondProb.bmp expectedImages/expectedCondProb.bmp
+		./hw10 exampleImages/RV.bmp output1.bmp
+		diff output1.bmp expectedImages/expectedRV.bmp
 
 test2: hw10
-	./hw10 inputs/test2.bin output2.bin
-	diff output2.bin expected/expected2.bin
+		./hw10 exampleImages/RV2.bmp output2.bmp
+		diff output2.bmp expectedImages/expectedRV2.bmp
 
 test3: hw10
-	./hw10 inputs/test3.bin output3.bin
-	diff output3.bin expected/expected3.bin
+		./hw10 exampleImages/CondProb.bmp output3.bmp
+		diff output3.bmp expectedImages/expectedCondProb.bmp
 
-clean: # remove all machine generated files
-	rm -f hw10 *.o *.txt *.bin
+test4: hw10
+		./hw10 exampleImages/RV2Small.bmp output4.bmp
+		diff output4.bmp expectedImages/expectedRV2Small.bmp
+
+clean:
+		rm -f $(OBJS) $(TARGET) valgrind?.log header.imagesize output?.bmp

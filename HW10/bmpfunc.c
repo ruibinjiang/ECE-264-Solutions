@@ -16,8 +16,8 @@ int RGB2Gray(unsigned char red, unsigned char green, unsigned char blue){
 #ifdef TEST_IMGTOGRAY
 
 BMPImage * ImgToGray(BMPImage * image){
-	int width = (image->header).width;
-	int height = (image->header).height;
+	//int width = (image->header).width;
+	//int height = (image->header).height;
 
 	// allocate space for the image
 	// the image has the same size
@@ -29,7 +29,7 @@ BMPImage * ImgToGray(BMPImage * image){
 	gray_image->header = image->header;
 
 	//Assign the the imagesize as height * width
-	(gray_image->header).imagesize = width*height;
+	(gray_image->header).imagesize = 	image->header.imagesize;
 
 	//check for data allocation failure using :
 	gray_image->data = malloc(sizeof(unsigned char)*(gray_image->header).imagesize);

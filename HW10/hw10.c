@@ -8,13 +8,14 @@ int main(int argc, char **argv){
   // open the BMP file
 	BMPImage * image = BMP_Open(argv[1]);
   // convert to gray scale
-	image = ImgToGray(image);
+	BMPImage * gray_image = ImgToGray(image);
 	// check for error in converting to gray scale
-	if(image == NULL){return EXIT_FAILURE;}
+	if(gray_image == NULL){return EXIT_FAILURE;}
 	// write the gray image to file
-	BMP_Write(argv[2], image);
+	BMP_Write(argv[2], gray_image);
 	// free all the images
 	BMP_Free(image);
+	BMP_Free(gray_image);
 	return EXIT_SUCCESS;
 }
 

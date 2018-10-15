@@ -38,44 +38,44 @@ int Is_BMPHeader_Valid(BMPHeader* header, FILE *fptr) {
 		// check out the link: https://en.wikipedia.org/wiki/BMP_file_format#Pixel_storage
 		if (( header -> type ) != 0X4D42 )
 		{
-			return 0;
+			return FALSE;
 		}
 		if (( header -> offset ) != BMP_HEADER_SIZE )
 		{
-			return 0;
+			return FALSE;
 		}
 		if (( header -> DIB_header_size ) != DIB_HEADER_SIZE )
 		{
-			return 0;
+			return FALSE;
 		}
 		if (( header -> bits ) != 24 )
 		{
-			return 0;
+			return FALSE;
 		}
 		if (( header -> planes ) != 1 )
 		{
-			return 0;
+			return FALSE;
 		}
 		if (( header -> compression ) != 0 )
 		{
-			return 0;
+			return FALSE;
 		}
 		if (( header -> ncolours ) != 0 )
 		{
-			return 0;
+			return FALSE;
 		}
 		if (( header -> importantcolours ) != 0 )
 		{
-			return 0;
+			return FALSE;
 		}
-		if (( header -> imagesize ) != ((header->bits)*(header->xresolution)*(header->yresolution)))
+		/*if (( header -> imagesize ) != ((header->bits)*(header->xresolution)*(header->yresolution)))
 		{
-			return 0;
+			return FALSE;
 		}
 		if (( header -> size ) != ((header->bits)*(header->xresolution)*(header->yresolution) + 54))
 		{
-			return 0;
-		}
+			return FALSE;
+		}*/
 
 		return TRUE;
 }
@@ -108,7 +108,7 @@ BMPImage *BMP_Open(const char *filename) {
 
 	//Read the first 54 bytes of the source into the header
 	int read_size = fread(&(bmpImage->header), sizeof(BMPHeader), 1, fptr);
-	if (read_size != sizeof(BMPHeader)){return NULL;}
+	if (read_size != 1){return NULL;}
 	//check if the header is valid
 	if (Is_BMPHeader_Valid(&(bmpImage->header), fptr) == 0){return NULL;}
 	// Allocate memory for image data
@@ -117,7 +117,7 @@ BMPImage *BMP_Open(const char *filename) {
 	bmpImage->data = (unsigned char *)malloc(sizeof(unsigned char)*((int)((bmpImage->header).imagesize)));
 	if (bmpImage->data == NULL){return NULL;}
 	// read in the image data
-	int read_data = fread(bmpImage -> data,sizeof (unsigned char) , (int)((bmpImage->header).imagesize),fptr);
+	int read_data = fread(bmpImage -> data,sizeof(unsigned char) , (int)((bmpImage->header).imagesize),fptr);
 	//check for error while reading
 	if(read_data != (int)((bmpImage->header).imagesize)){return NULL;}
 	fclose(fptr);
