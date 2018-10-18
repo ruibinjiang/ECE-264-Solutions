@@ -1,7 +1,3 @@
-# ***
-# *** Please modify this file as required
-# ***
-
 WARNING = -Wall -Wshadow --pedantic
 ERROR = -Wvla -Werror
 GCC = gcc -std=c99 -g $(WARNING) $(ERROR)
@@ -24,7 +20,7 @@ testmemory: $(TARGET)
 .c.o:
 	$(GCC) $(TESTFALGS) -c $*.c
 
-testall: test1 test2 test3
+testall: test1 test2 test3 test4
 
 test1: hw11
 		./hw11 exampleImages/RV.bmp output1.bmp 5 2
