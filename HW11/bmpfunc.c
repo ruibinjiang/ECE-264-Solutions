@@ -77,6 +77,8 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius, int epsilon){
 	int pixel=0;
 	int row = 0;
 	int col = 0;
+	int count = 0;
+	int sum = 0;
 	//Run a nested loop for all elements using height and width
         //Find the maximum of top row, bottom rpw, left column and right column using radius
 	/*int toprow = MAX(0, row-radius);
@@ -99,16 +101,16 @@ BMPImage * AdaptiveThresholding(BMPImage * grayImage, int radius, int epsilon){
 	 	int leftcol = MAX(0, col-radius);
 	 	int rightcol = MIN(width-1, col+radius);
 
-		int count = 0;
-		int sum = 0;
-		for(int r = toprow; r<bottomrow; r++){
-			for(int c = leftcol; c<rightcol; c++){
+		count = 0;
+		sum = 0;
+		for(int r = toprow; r<=bottomrow; r++){
+			for(int c = leftcol; c<=rightcol; c++){
 				sum+=grayImage->data[(r*width + c)*3];
 				count++;
 			}
 		}
 		int avg = sum / count;
-		if((avg-epsilon)>(adaptive->data[pixel])){
+		if((avg-epsilon)>(grayImage->data[pixel])){
 			adaptive->data[pixel+2] = 0;
 			adaptive->data[pixel+1] = 0;
 			adaptive->data[pixel] = 0;
