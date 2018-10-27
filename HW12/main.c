@@ -14,13 +14,24 @@
 int main(int argc, char **argv)
 {
 	// if argc < 4 then return EXIT_FAILURE
+	if (argc != 4)
+    {
+      return EXIT_FAILURE;
+    }
 	// argv[1] - length of linked list
 	// argv[2] - value of k as mentioned in josephus algorithm
+	int length = (int) strtol(argv[1], NULL, 10);
+	int k = (int) strtol(argv[2], NULL, 10);
 	// argv[3] - value of elemDivisible
+	int elemDivisible = (int) strtol(argv[3], NULL, 10);
 	// create head node
+	Node * head = CreateNode(0);
 	// create Linked list with length as argv[1]
+	LinkedListCreate(&head,length);
 	// run josephus
+	Josephus(&head, k, elemDivisible);
 	// free the head node
+	free(head);
 	return EXIT_SUCCESS;
 }
 

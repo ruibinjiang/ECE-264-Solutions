@@ -70,6 +70,7 @@ void LinkedListCreate(Node * * head, int length)
 		}
 		temp ->next = CreateNode(i);
 	}
+
 	// do not return anything
 	return;
 }
@@ -93,8 +94,8 @@ void Josephus(Node ** head, int k, int elemDivisible)
 	// remember to free the memory of the nodes
 	// print the linked list using our function when number of nodes remaining is divisible by elemDivisible
 	Node*lst=*head;
-	Node*cur=*head;
-//	Node*nhead=*head;
+	Node*cur=lst->next;
+	Node*nhead=*head;
 
 	//get length
 	int length = 1;
@@ -103,56 +104,44 @@ void Josephus(Node ** head, int k, int elemDivisible)
     lst = lst->next;
     length++;
   }
-
+	lst = *head;
 	int num_alive = length;
 
 
-	int kill_num = 0;
-	while(num_alive > 1)
-  {
-    while(kill_num < k)
-    {
-      if (lst->next == NULL)
-      {
-        lst = *head;
-        cur = lst->next;
-      }
-      else if (cur->next == NULL)
-      {
-
-        lst = cur;
-        cur = *head;
-      }
-      else
-      {
-        lst = lst->next;
-        cur = cur->next;
-      }
-      ++kill_num;
-    }
-
-    if (cur->value == (*head)->value)
-    {
-      *head = cur->next;
+	int kill_num = 2;
+	while(num_alive > 1){
+		if(kill_num==k&&cur==nhead){
+			nhead=cur->next;
 			free(cur);
-      cur = *head;
-      --num_alive;
-      kill_num = 0;
-    }
-    else
-    {
-      lst->next = cur->next;
+			cur=nhead->next;
+			kill_num = 1;
+			num_alive--;
+			if(!(num_alive % elemDivisible)){
+				LinkedListPrint(nhead);
+			}
+			lst=lst->next;
+			cur=cur->next;
+		}
+		else if(kill_num==k){
+			lst->next=cur->next;
 			free(cur);
-      cur = lst->next;
-      --num_alive;
-      kill_num = 0;
-    }
-
-    if (!(num_alive % elemDivisible))
-    {
-      LinkedListPrint(*head);
-    }
-  }
+			cur=lst->next;
+			kill_num = 1;
+			num_alive--;
+			if(!(num_alive % elemDivisible)){
+				LinkedListPrint(nhead);
+			}
+			lst=lst->next;
+			cur=cur->next;
+		}
+		else{
+			kill_num++;
+			lst=lst->next;
+			cur=cur->next;
+		}
+		if(cur==NULL){cur=nhead;}
+		else if(lst==NULL){lst=nhead;}
+	}
 	//LinkedListPrint(*head);
 
 	return;
