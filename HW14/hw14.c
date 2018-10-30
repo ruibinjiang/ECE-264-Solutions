@@ -1,6 +1,7 @@
 /****************** Modify this file at specified place *************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "hw14.h"
 
 
@@ -10,7 +11,16 @@
 Node * CreateNode(int val)
 //val: value of the element of the node to be created
 {
-	// same as previous homeworks
+  Node *new_node = NULL;
+  new_node = malloc(sizeof(Node));
+	if (new_node == NULL)
+  {
+    return NULL;
+  }
+  new_node->value = val;
+  new_node->next = NULL;
+	//return the newNode
+	return new_node;
 }
 #endif
 
@@ -46,7 +56,7 @@ void LinkedListCreate(Node * * source, int len, int* arr)
 // head1 is the head of the upper sub-list.
 // head2 is the head of the lower sub-list.
 
-void SpiltList(Node* source, Node** head1, Node** head2)
+void SplitList(Node* source, Node** head1, Node** head2)
 {
   // Find the mid point of the list.
 	int length = 0;
@@ -98,10 +108,26 @@ void SpiltList(Node* source, Node** head1, Node** head2)
 Node* Merge(Node* upper, Node* lower)
 {
 	// Check for the base cases. (When either sub-list is NULL)
-
+  if(upper == NULL){
+    return(lower);
+  }
+  else if(lower == NULL){
+    return(upper);
+  }
+  Node* sorted = NULL;
 	// Pick the larger between upper and lower, and recur appropriately.
-
+  if((upper->value)<=(lower->value))
+  {
+    sorted = upper;
+    sorted->next = Merge(upper->next, lower);
+  }
+  else
+  {
+    sorted = lower;
+    sorted->next = Merge(upper, lower->next);
+  }
 	// return the merged array
+  return(sorted);
 }
 #endif
 
@@ -109,20 +135,46 @@ Node* Merge(Node* upper, Node* lower)
 // source is the head of the list to for which MergeSort is to be performed.
 void MergeSort(Node** source)
 {
-	// Declare a node, to hold the current head of the source list.
+  int length = 0;
+  Node *temp = *source;
+  while((temp->next) != NULL)
+  {
+    temp = temp->next;
+    ++length;
+  }
 
+  if (length < 1)
+  {
+    return;
+  }
+  // Declare a node, to hold the current head of source list.
+	Node *current_head = *source;
 	// Declare nodes, to hold the two the heads of the two sub-lists.
+	Node *head1 = NULL;
+  head1 = malloc(sizeof(Node));
+  if (head1 == NULL)  //Check Memory allocation failure
+  {
+    return;
+  }
 
+  Node *head2 = NULL;
+  head2 = malloc(sizeof(Node));
+  if (head2 == NULL)  //Check Memory allocation failure
+  {
+    return;
+  }
 	// Check for the base case -- length 0 or 1
 		// if so, return;
 
 	// Use SpiltList() to partition the list into sub lists.
 		// This will partiton the source list, into two lists (As done in the previous homework)
-
+  SplitList(current_head, &head1, &head2);
 	// Recursively sort the sub-lists by calling MergeSort() on the upper and lower sub-lists.
 		// MergeSort() is a recursive function, and MergeSort() needs to be called
 		// on both sub-lists (obtained after partitioning)
-
+  MergeSort(&head1);
+  MergeSort(&head2);
 	// Merge the two sorted lists together, using the Merge()
+  *source = Merge(head1,head2);
 }
 #endif
