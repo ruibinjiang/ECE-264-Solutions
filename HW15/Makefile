@@ -6,7 +6,7 @@ CC = $(GCC) $(CFLAGS)
 SRCS = main.c hw15.c
 
 OBJS = $(SRCS:%.c=%.o)
-VALGRIND = valgrind --tool=memcheck --verbose --log-file
+VALGRIND = valgrind --tool=memcheck --verbose --leak-check=full --log-file
 
 TESTFLAGS = -DTEST_MAIN -DTEST_CREATENODE -DTEST_LINKEDLISTCREATE -DTEST_REMOVED -DLINKEDLIST
 
