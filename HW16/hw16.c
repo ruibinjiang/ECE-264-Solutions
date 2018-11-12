@@ -14,8 +14,8 @@ void FreeBinaryTree(treeNode *root)
     if (root == NULL){ return;}
 
     /* first delete both subtrees */
-    deleteTree(root->left);
-    deleteTree(root->right);
+    FreeBinaryTree(root->leftChild);
+    FreeBinaryTree(root->rightChild);
 
     /* then delete the node */
     free(root);
@@ -37,9 +37,9 @@ treeNode* search(treeNode * tn, int value)
     if((tn->value)==value){
         return tn;
     }
-    L = search(tn->left,value);
+    L = search(tn->leftChild,value);
     if((L != NULL) && (L->value == value)){return tn;}
-    R = search(tn->right,value);
+    R = search(tn->rightChild,value);
     if((R != NULL) && (R->value == value)){return tn;}
     return NULL;
 }
@@ -66,10 +66,11 @@ bool isSubTree(treeNode* haystack, treeNode *needle)
   }
 
   L = isSubTree(haystack->leftChild,needle->leftChild);
-  if(haystack->value != needle->value){return false;}
+  if(L==false){return false;}
   R = isSubTree(haystack->rightChild,needle->rightChild);
-  if(haystack->value != needle->value){return false;}
-  return true;
+  if(R==false){return false;}
+  bool re = R&&L;
+  return (re);
 }
 #endif
 
@@ -84,7 +85,15 @@ bool isSubTree(treeNode* haystack, treeNode *needle)
 // "strstr(const char \*haystack, const char \*needle)"
 bool isContained(treeNode * haystack, treeNode * needle)
 {
+  treeNode * find_root = search(haystack, needle->value);
+  if (find_root == NULL)
+  {
+    return false;
+  }
 
+  //Otherwise, mutually search trees so that their values match.
+  return(isSubTree(find_root, needle));
+  //return(true);
 }
 
 
