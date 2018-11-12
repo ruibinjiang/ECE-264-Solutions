@@ -11,14 +11,14 @@
 
 void FreeBinaryTree(treeNode *root)
 {
-    if (root == NULL){ return;} 
-  
+    if (root == NULL){ return;}
+
     /* first delete both subtrees */
-    deleteTree(root->left); 
-    deleteTree(root->right); 
-    
+    deleteTree(root->left);
+    deleteTree(root->right);
+
     /* then delete the node */
-    free(root); 
+    free(root);
 }
 
 #endif
@@ -28,16 +28,20 @@ void FreeBinaryTree(treeNode *root)
 // and returns the node which has that value
 treeNode* search(treeNode * tn, int value)
 {
-    if (tn == NULL) 
-          return NULL; 
-  
+    treeNode* L = NULL;
+    treeNode* R = NULL;
+    if (tn == NULL) {
+          return NULL;
+    }
+
     if((tn->value)==value){
         return tn;
     }
-    else{
-     return search(tn->left);
-     return search(tn->right);
-    }
+    L = search(tn->left,value);
+    if((L != NULL) && (L->value == value)){return tn;}
+    R = search(tn->right,value);
+    if((R != NULL) && (R->value == value)){return tn;}
+    return NULL;
 }
 
 #endif
@@ -52,7 +56,20 @@ treeNode* search(treeNode * tn, int value)
 */
 bool isSubTree(treeNode* haystack, treeNode *needle)
 {
+  bool L = true;
+  bool R = true;
+  if (needle == NULL) {
+        return true;
+  }
+  if((haystack->value)!= (needle->value)){
+      return false;
+  }
 
+  L = isSubTree(haystack->leftChild,needle->leftChild);
+  if(haystack->value != needle->value){return false;}
+  R = isSubTree(haystack->rightChild,needle->rightChild);
+  if(haystack->value != needle->value){return false;}
+  return true;
 }
 #endif
 

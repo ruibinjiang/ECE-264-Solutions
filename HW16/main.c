@@ -54,8 +54,8 @@ int main(int argc, char **argv)
 	treeNode * tn1 = BinaryTreeCreate(argv[1]);
 	treeNode * tn2 = BinaryTreeCreate(argv[2]);
 
-	bool tn1_contained_tn2 = isContained(treeNode * tn2, treeNode * tn1);
-	bool tn2_contained_tn1 = isContained(treeNode * tn1, treeNode * tn2);
+	bool tn1_contained_tn2 = isContained(tn2, tn1);
+	bool tn2_contained_tn1 = isContained(tn1, tn2);
 	PrintTn1ContainedTn2 (tn1_contained_tn2, tn2_contained_tn1);
 	FreeBinaryTree(tn1);
 	FreeBinaryTree(tn2);
