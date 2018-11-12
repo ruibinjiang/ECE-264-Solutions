@@ -48,10 +48,13 @@ int main(int argc, char **argv)
 	// 2. Second you should check if tree2 is contained in tree1,
 	// 3. Pass the results to the print function given to your
 	// remember to free all the memory.
-	tn1_contained_tn2 = isContained(treeNode * haystack, treeNode * needle);
-	tn2_contained_tn1 = isContained(treeNode * haystack, treeNode * needle);
-	bool isContained(treeNode * haystack, treeNode * needle)
-
+	if (argc < 3){
+		return EXIT_FAILURE;
+	}
+	bool tn1_contained_tn2 = isContained(treeNode * haystack, treeNode * needle);
+	bool tn2_contained_tn1 = isContained(treeNode * haystack, treeNode * needle);
+	PrintTn1ContainedTn2 (tn1_contained_tn2, tn2_contained_tn1);
+	FreeBinaryTree(root);
 
 	return EXIT_SUCCESS;
 }
