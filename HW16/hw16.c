@@ -21,7 +21,16 @@ void FreeBinaryTree(treeNode *root)
 // and returns the node which has that value
 treeNode* search(treeNode * tn, int value)
 {
-
+    if(tn==NULL){
+        return NULL;
+    }
+    if((tn->value)==value){
+        return tn;
+    }
+    if((r->value)>value){
+        return search(tn->left,value);
+    }
+    return search(tn->right,value);
 }
 
 #endif
