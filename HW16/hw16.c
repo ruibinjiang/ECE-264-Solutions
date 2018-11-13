@@ -11,7 +11,14 @@
 
 void FreeBinaryTree(treeNode *root)
 {
-
+    if (root == NULL){ return;} 
+  
+    /* first delete both subtrees */
+    deleteTree(root->left); 
+    deleteTree(root->right); 
+    
+    /* then delete the node */
+    free(root); 
 }
 
 #endif
@@ -21,16 +28,16 @@ void FreeBinaryTree(treeNode *root)
 // and returns the node which has that value
 treeNode* search(treeNode * tn, int value)
 {
-    if(tn==NULL){
-        return NULL;
-    }
+    if (tn == NULL) 
+          return NULL; 
+  
     if((tn->value)==value){
         return tn;
     }
-    if((r->value)>value){
-        return search(tn->left,value);
+    else{
+     return search(tn->left);
+     return search(tn->right);
     }
-    return search(tn->right,value);
 }
 
 #endif
