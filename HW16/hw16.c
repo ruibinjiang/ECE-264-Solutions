@@ -38,9 +38,9 @@ treeNode* search(treeNode * tn, int value)
         return tn;
     }
     L = search(tn->leftChild,value);
-    if((L != NULL) && (L->value == value)){return tn;}
+    if((L != NULL) && (L->value == value)){return L;}
     R = search(tn->rightChild,value);
-    if((R != NULL) && (R->value == value)){return tn;}
+    if((R != NULL) && (R->value == value)){return R;}
     return NULL;
 }
 
@@ -56,12 +56,16 @@ treeNode* search(treeNode * tn, int value)
 */
 bool isSubTree(treeNode* haystack, treeNode *needle)
 {
+
   bool L = true;
   bool R = true;
   if (needle == NULL) {
-        return true;
+    return true;
   }
-  if((haystack->value)!= (needle->value)){
+  else if(haystack == NULL){
+    return false;
+  }
+  else if((haystack->value)!= (needle->value)){
       return false;
   }
 
@@ -69,8 +73,7 @@ bool isSubTree(treeNode* haystack, treeNode *needle)
   if(L==false){return false;}
   R = isSubTree(haystack->rightChild,needle->rightChild);
   if(R==false){return false;}
-  bool re = R&&L;
-  return (re);
+  return (true);
 }
 #endif
 
@@ -89,6 +92,11 @@ bool isContained(treeNode * haystack, treeNode * needle)
   if (find_root == NULL)
   {
     return false;
+  }
+
+  if (find_root->value != needle->value)
+  {
+    printf("%d\n",needle->value);
   }
 
   //Otherwise, mutually search trees so that their values match.
