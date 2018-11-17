@@ -59,7 +59,7 @@ int FindDistance(treeNode* t, int search_query, int distance)
 {
 
 	/*
-	 * This function recursively checks for the value of search_query in the tree. 
+	 * This function recursively checks for the value of search_query in the tree.
 	 * Use the properties of binary search tree in order to search for the search_query.
 	 * if a match is found, return distance.
 	 * if not, recursively call, either the left child or the right child, search_query and distance+1 as arguments.
@@ -99,13 +99,13 @@ treeNode* CreateBST(int* a,int root, int start, int end)
 	 * Store the first value of every subarray as the root.
 	 * Recursively call the CreateBST function with array, modified values of root, start and end.
 	 * End Condition for recusion: check for relative positions of start and end. end can never be less than start.
-	 * if start and end point to the same element in the array, then it is a leaf node. Assign the values of 
+	 * if start and end point to the same element in the array, then it is a leaf node. Assign the values of
 	 *   its children accordingly.
 	 *
 	 *//////
-	
+
         if(end < start){return NULL;}
-        
+
         treeNode * newNode = malloc(sizeof(treeNode));
 
         newNode->value=root;
@@ -119,9 +119,9 @@ treeNode* CreateBST(int* a,int root, int start, int end)
                 ++endL;
         }
         --endL;
-        newNode->leftChild = CreateBST(a, a[start+1], start+1, endL);
 
-	newNode->rightChild = CreateBST(a, a[endL+1], endL+1, end);
+        newNode->leftChild = CreateBST(a, a[start+1], start+1, endL);
+	      newNode->rightChild = CreateBST(a, a[endL+1], endL+1, end);
         return newNode;
 }
 #endif
