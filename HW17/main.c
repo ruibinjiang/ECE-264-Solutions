@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 
 
 
-  treeNode * root = CreateBST(arr, arr[0], 0, (num - 2));
+  treeNode * root = CreateBST(arr, num-1, 0, (num - 2));
 
 
   BinaryTreeInOrderPrint(root);

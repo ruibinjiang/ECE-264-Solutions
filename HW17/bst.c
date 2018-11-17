@@ -104,10 +104,10 @@ treeNode* CreateBST(int* a,int root, int start, int end)
 	 *
 	 *//////
 
-        if(end < start){return NULL;}
+        if(end < start || start > root){return NULL;}
 
         treeNode * newNode = malloc(sizeof(treeNode));
-
+        root=a[start];
         newNode->value=root;
         if(end == start){
                 newNode->leftChild = NULL;
@@ -120,8 +120,10 @@ treeNode* CreateBST(int* a,int root, int start, int end)
         }
         --endL;
 
-        newNode->leftChild = CreateBST(a, a[start+1], start+1, endL);
-	      newNode->rightChild = CreateBST(a, a[endL+1], endL+1, end);
+        newNode->leftChild = CreateBST(a, root, start+1, endL);
+
+	newNode->rightChild = CreateBST(a, root, endL+1, end);
+
         return newNode;
 }
 #endif
