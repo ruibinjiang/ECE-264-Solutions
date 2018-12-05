@@ -19,13 +19,60 @@ TreeNode * readHeader(FILE * infptr)
 	 * If a command is 1, then the next 8 bits(for this assignment) are the value stored
 	 	 in a leaf node. Create a tree node to store this value. Add this tree node to the
 		 beginning of the linked list (basically, LinkedList is acting like a stack here).
-     This tree node is a single-node tree.  
+     This tree node is a single-node tree.
 	 * If a command is 0 and the list has two or more nodes, then take the first two nodes from
 	 	 the list, create a tree node as the parent. Add this parent node to the linked list.
    * If a command is 0 and the list has only one node, then the complete tree has been built.
 	 * After the tree is completely built, then read one more bit. If this is not the last
 	 	 (rightmost) bit of the byte, discard the remaining bits in the byte.
 	*/
+  int done = 0;
+  unsigned char whichbit = 0;
+  unsigned char curbyte  = 0;
+  unsigned char onebit   = 0;
+  ListNode * head = NULL;
+  // decreasing to ensure the list is a stack
+  while (done == 0)
+    {
+      readBit(infptr, & onebit, & whichbit, & curbyte);
+      if (onebit == 1)
+	{
+	  // a leaf node, get 7 move bits
+	  int bitcount;
+	  unsigned char value = 0;
+	  for (bitcount = 0; bitcount < 8; bitcount ++)
+	    {
+	      value <<= 1; // shift left by one
+	      readBit(infptr, & onebit, & whichbit, & curbyte);
+	      value |= onebit;
+	    }
+	  // push a tree node into the list
+	  TreeNode * tn = TreeNode_create(value, 0);
+	  ListNode * ln = ListNode_create(tn);
+	  head = List_insert(head, ln);
+	}
+      else
+	{
+	  if (head == NULL)
+	    {
+	      //printf("ERROR, head should not be NULL\n");
+	    }
+	  if ((head -> next) == NULL)
+	    {
+	      // the tree has been completely built
+	      done = 1;
+	    }
+	  else
+	    {
+	      head = MergeListNode(head);
+	    }
+	   }
+    }
+  // unnecessary to read the remaining unused bits
+  TreeNode * root = head -> tnptr;
+  // the linked list is no longer needed
+  free (head);
+  return root;
 }
 
 #endif
@@ -43,6 +90,26 @@ int decode(char * infile, char * outfile)
   // Print the number of characters obtained by using the PrintNumberChar function
 	// Do not use your own print functions
 	// free up the memory
+  FILE * infptr = fopen(infile, "r");
+  FILE *outfptr = fopen(outfile, "w");
+  if (infptr == NULL)
+    {
+      return 0;
+    }
+  TreeNode * root = readHeader(infptr);
+  Tree_print(root, outfptr);
+  // read the number of characters
+  unsigned int numChar = 0;
+  fread(& numChar, sizeof(unsigned int), 1, infptr);
 
+  // read '\n'
+  unsigned char newline;
+  fread(& newline, sizeof(unsigned char), 1, infptr);
+
+  PrintNumberChar(numChar, outfptr);
+  Tree_destroy(root);
+  fclose(infptr);
+  fclose(outfptr);
+  return 1;
 }
 #endif
