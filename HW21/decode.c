@@ -15,6 +15,53 @@ You Can Modify below, Do Not modify above this
 TreeNode * readHeader(FILE * infptr)
 {
   // This is the same function from HW20
+  int done = 0;
+  unsigned char whichbit = 0;
+  unsigned char curbyte  = 0;
+  unsigned char onebit   = 0;
+  ListNode * head = NULL;
+  // decreasing to ensure the list is a stack
+  while (done == 0)
+    {
+      readBit(infptr, & onebit, & whichbit, & curbyte);
+      if (onebit == 1)
+  {
+    // a leaf node, get 7 move bits
+    int bitcount;
+    unsigned char value = 0;
+    for (bitcount = 0; bitcount < 8; bitcount ++)
+      {
+        value <<= 1; // shift left by one
+        readBit(infptr, & onebit, & whichbit, & curbyte);
+        value |= onebit;
+      }
+    // push a tree node into the list
+    TreeNode * tn = TreeNode_create(value, 0);
+    ListNode * ln = ListNode_create(tn);
+    head = List_insert(head, ln);
+  }
+      else
+  {
+    if (head == NULL)
+      {
+        //printf("ERROR, head should not be NULL\n");
+      }
+    if ((head -> next) == NULL)
+      {
+        // the tree has been completely built
+        done = 1;
+      }
+    else
+      {
+        head = MergeListNode(head);
+      }
+     }
+    }
+  // unnecessary to read the remaining unused bits
+  TreeNode * root = head -> tnptr;
+  // the linked list is no longer needed
+  free (head);
+  return root;
 }
 
 #endif
