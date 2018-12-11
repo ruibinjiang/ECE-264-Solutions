@@ -79,5 +79,28 @@ int decode(char * infile, char * outfile)
   // function (same as in previous assignment using) and then printing each decoded character into
   // the outfile.
 
+  FILE * infptr = fopen(infile, "r");
+  FILE *outfptr = fopen(outfile, "w");
+  if (infptr == NULL)
+    {
+      return 0;
+    }
+  TreeNode * root = readHeader(infptr);
+  Tree_print(root, outfptr);
+  // read the number of characters
+  unsigned int numChar = 0;
+  fread(& numChar, sizeof(unsigned int), 1, infptr);
+
+  // read '\n'
+  unsigned char newline;
+  fread(& newline, sizeof(unsigned char), 1, infptr);
+
+  PrintNumberChar(numChar, outfptr);
+
+
+  Tree_destroy(root);
+  fclose(infptr);
+  fclose(outfptr);
+  return 1;
 }
 #endif
